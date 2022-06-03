@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/all.css" />
+        <title>TodoList</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>TODO LIST</h1>
+            <div class="input-group">
+                <input id="inputTodo" type="text" name="" placeholder="請輸入待辦事項" />
+                <a id="addBtn" class="add_btn" href="#">+</a>
+            </div>
+
+            <div class="todo-warp">
+                <ul id="tab" class="tab">
+                    <li class="active" data-status="all">全部</li>
+                    <li data-status="doing">待完成</li>
+                    <li data-status="done">已完成</li>
+                </ul>
+
+                <div class="content">
+                    <ul id="todoListAll">
+                        <!-- <li>
+                            <label class="checkbox" for="todo">
+                                <input type="checkbox" name="" id="todo" />
+                                <span>123</span>
+                            </label>
+                            <a href="">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    aria-hidden="true"
+                                    role="img"
+                                    class="iconify iconify--material-symbols"
+                                    width="24"
+                                    height="24"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        fill="currentColor"
+                                        d="M9.875 17.525L12 15.4l2.125 2.125l1.4-1.4L13.4 14l2.15-2.125l-1.425-1.4L12 12.6l-2.125-2.125l-1.4 1.4L10.6 14l-2.125 2.125ZM5 6V4h3.5l1-1h5l1 1H19v2Zm3 15q-.825 0-1.412-.587Q6 19.825 6 19V7h12v12q0 .825-.587 1.413Q16.825 21 16 21Z"
+                                    ></path>
+                                </svg>
+                            </a>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/all.js"></script>
+    </body>
+</html>
