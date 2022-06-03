@@ -1,9 +1,9 @@
 //取得DOM
 const addBtn = document.querySelector("#addBtn")
-const inputTodo = document.querySelector("#inputTodo")
-const todoListAll = document.querySelector("#todoListAll")
+const inputTodo = document.querySelector("#inputTodo") // 新增的內容
+const todoListAll = document.querySelector("#todoListAll") // 待辦列表(ul)
 
-let todoData = [] //全部資料
+let todoData = JSON.parse(localStorage.getItem('todoItem')) || [] //取出存在localStorage裡的資料並轉為陣列(無資料則為空值)
 
 // 新增待辦
 addBtn.addEventListener("click", (e) => {
@@ -20,7 +20,8 @@ addBtn.addEventListener("click", (e) => {
         alert('待辦事項不得為空')
     }
     inputTodo.value = '' //新增後清空輸入框(避免連續新增)
-    changedata()
+    localStorage.setItem('todoItem',JSON.stringify(todoData)) // 存入localStorage作更新(要轉為字串)
+    updataList() //更新資料並重新渲染
 })
 
 // 初始
@@ -34,9 +35,9 @@ function updataTodo(data = todoData) {
         data.forEach((item,key) => {
             todoListHtml += `
             <li>
-                <label data-num="${item.id}" class="checkbox" for="${item.id}">
-                    <input ${item.checked} type="checkbox" id="${item.id}}" />
-                    <span>${item.content}</span>
+                <label data-num="${item.id}" data-type="check" class="checkbox" for="${item.id}">
+                    <input data-num="${item.id}" data-type="check" ${item.checked} type="checkbox" id="${item.id}}" />
+                    <span data-num="${item.id}" data-type="check">${item.content}</span>
                 </label>
                 <a class="delete" href="#" data-num="${item.id}">
                     <svg
@@ -63,7 +64,7 @@ function updataTodo(data = todoData) {
             </li>`
         })
     
-        // 【重要】請不要把這段誤擺到forEach裡面(因為自己的眼殘找bug找了好幾小時T_T)
+
         todoListAll.innerHTML = todoListHtml
     }
 
@@ -81,15 +82,18 @@ todoListAll.addEventListener("click", (e) => {
     if(e.target.getAttribute('class') == 'delete') { 
         e.preventDefault()
         todoData.splice(num, 1)
-        changedata()
+        localStorage.setItem('todoItem',JSON.stringify(todoData));
+        updataList()
 
-    } else if (e.target.getAttribute('class') == 'checkbox') {
+    } else if (e.target.getAttribute('data-type') == 'check') {
         if ( todoData[num].checked == ''){
             todoData[num].checked = 'checked'
-            changedata()
+            localStorage.setItem('todoItem',JSON.stringify(todoData));
+            updataList()
         }else {
             todoData[num].checked = ''
-            changedata()
+            localStorage.setItem('todoItem',JSON.stringify(todoData));
+            updataList()
         }
     }
 })
@@ -110,11 +114,11 @@ tab.addEventListener("click", (e) => {
             item.classList.remove('active')
         }
     })
-    changedata()
+    updataList()
 })
 
-//依分類切換資料
-function changedata() {
+//更新: 依分類切換資料
+function updataList() {
     let activeData = []
     if(activeStatus == 'doing') {
         activeData = todoData.filter((item) => { return item.checked == '' })
